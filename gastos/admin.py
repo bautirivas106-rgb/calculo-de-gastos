@@ -14,7 +14,7 @@ class GastoAdmin(admin.ModelAdmin):
             'fields': ('sub_hogar',),
         }),
         ('Detalle Gasto Boludo', {
-            'fields': ('sub_boludo', 'tipo_plataforma', 'servicio_specifico'),
+            'fields': ('sub_boludo', 'tipo_plataforma', 'servicio_especifico'),
         }),
         ('Extras', {
             'fields': ('descripcion',),
