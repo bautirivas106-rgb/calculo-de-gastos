@@ -25,6 +25,7 @@ class Gasto(models.Model):
         ('cigarrillos', 'Cigarrillos'),
         ('galletitas', 'Galletitas'),
         ('plataformas', 'Plataformas Digitales'),
+        ('boliche', 'Boliche'),
     ]
 
     TIPO_PLATAFORMA_CHOICES = [
