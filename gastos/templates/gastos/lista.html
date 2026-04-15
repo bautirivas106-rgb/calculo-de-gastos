@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Balance: Sueldos y Gastos</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #f0f2f5; }
+        .container { max-width: 1000px; margin: auto; }
+        h1, h2 { color: #333; }
+        
+        /* Estilo de las tarjetas de balance */
+        .balance-cards { display: flex; gap: 20px; margin-bottom: 30px; }
+        .card { flex: 1; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card strong { display: block; margin-bottom: 10px; color: #666; }
+        .card span { font-size: 1.5em; font-weight: bold; }
+        
+        .ingresos { border-left: 6px solid #28a745; color: #28a745; }
+        .gastos { border-left: 6px solid #dc3545; color: #dc3545; }
+        .balance { border-left: 6px solid #007bff; color: #007bff; }
+
+        table { width: 100%; border-collapse: collapse; background: white; margin-bottom: 30px; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background-color: #f8f9fa; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resumen de Cuenta</h1>
+        
+        <div class="balance-cards">
+            <div class="card ingresos">
+                <strong>Ingresos Totales</strong>
+                <span>+ ${{ total_ingresos }}</span>
+            </div>
+            <div class="card gastos">
+                <strong>Gastos Totales</strong>
+                <span>- ${{ total_gastos }}</span>
+            </div>
+            <div class="card balance">
+                <strong>Dinero Disponible</strong>
+                <span>${{ balance }}</span>
+            </div>
+        </div>
+
+        <h2>Ingresos (Sueldo y Propinas)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Monto</th>
+                    <th>Obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ingreso in ingresos %}
+                <tr>
+                    <td>{{ ingreso.fecha }}</td>
+                    <td>{{ ingreso.get_tipo_display }}</td>
+                    <td>${{ ingreso.monto }}</td>
+                    <td>{{ ingreso.descripcion|default:"" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Detalle de Gastos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Categoría</th>
+                    <th>Detalle</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gasto in gastos %}
+                <tr>
+                    <td>{{ gasto.fecha }}</td>
+                    <td>{{ gasto.get_tipo_display }}</td>
+                    <td>
+                        {{ gasto.get_sub_hogar_display }}
+                        {{ gasto.get_sub_boludo_display }}
+                        {% if gasto.servicio_especifico %}({{ gasto.get_servicio_especifico_display }}){% endif %}
+                    </td>
+                    <td>${{ gasto.monto }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
